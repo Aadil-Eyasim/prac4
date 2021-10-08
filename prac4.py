@@ -30,7 +30,7 @@ def setup():
     pass
     
 
-t = 1 
+t = 10 
 start = time.time()
 def print_runtime_temp_thread():
 
