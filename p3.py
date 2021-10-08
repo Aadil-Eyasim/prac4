@@ -16,7 +16,7 @@ cs = digitalio.DigitalInOut(board.D5)
 mcp = MCP.MCP3008(spi, cs)
 # create an analog input channel on pin 1
 chan = AnalogIn(mcp, MCP.P2)
-chan1 = AnalogIn(mcp, MCP.P3)
+chan1 = AnalogIn(mcp, MCP.P1)
 
 #print(’Raw ADC Value: ’, chan.value)
 #print(’ADC Voltage: ’ + str(chan.voltage) + ’V’)
@@ -55,21 +55,14 @@ presses = 0
 def toggle_btn_pressed(toggle_btn):
 #this function increases the sampling period if the button is pressed
     global t
-    global presses
-    
-    presses+=1
-
-    if (presses==1):
-        sampling_time = 1
-    elif (presses==2):
-        sampling_time = 5
-    elif (presses==3):
-        sampling_time = 10
-        presses=0 #loop back to 0 presses once the button has been pressed 3 times
-    
-    return t
-    return presses
-
+    if GPIO.event_detected(toggle_btn):
+        if t>5:
+            t=5
+        elif t==5:
+            t=1
+        else:
+            t=10
+        return t
 pass
 
 if __name__ == "__main__":
