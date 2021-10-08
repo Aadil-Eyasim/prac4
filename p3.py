@@ -45,13 +45,13 @@ def print_runtime_temp_thread():
     end = time.time() #get the end time 
     runtime = math.trunc(end-start) 
  
-    temp = (chan1.voltage - 0.5)/0.01  
+    temp = (chan1.voltage - 0.5)*100  
     
-    print('{:<12s} {:<15d} {:<4.1f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan.value))
+    print('{:<12s} {:<15d} {:<4.1f} C {:>15d}'.format(str(runtime)+'s', chan1.value, temp, chan.value))
     pass 
 
 # sampling period button
-
+presses = 0
 def toggle_btn_pressed(toggle_btn):
 #this function increases the sampling period if the button is pressed
     global t
