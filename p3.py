@@ -1,57 +1,84 @@
 import busio
 import digitalio
-import board
-import adafruit_mcp3xxx.mcp3008 as MCP
-from adafruit_mcp3xxx.analog_in import AnalogIn
+import board 
 import threading
-import datetime
+import time 
 import RPi.GPIO as GPIO
+import adafruit_mcp3xxx.mcp3008 as MCP 
+from adafruit_mcp3xxx.analog_in import AnalogIn 
+import math
 
-# create the spi bus
+
+# some global variables that need to change as we run the program
+sampling_time = 1
+presses = 0
+
+#define pins
+sampling_btn = 23
+  
+#setup 
+def setup():
+    #setup button
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(sampling_btn, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.add_event_detect(sampling_btn, GPIO.FALLING, callback=sampling_btn_pressed, bouncetime=400) #add rising edge detection on a channel
+    
+    pass
+    
+#create the spi bus
 spi = busio.SPI(clock=board.SCK, MISO=board.MISO, MOSI=board.MOSI)
 # create the cs (chip select)
 cs = digitalio.DigitalInOut(board.D5)
 # create the mcp object
 mcp = MCP.MCP3008(spi, cs)
-# create an analog input channel on pin 1 for temp reading and pin 2 for light reading
+# create an analog input channel on pin 1
 chan = AnalogIn(mcp, MCP.P1)
-chan1= AnalogIn(mcp, MCP.P2)
-GPIO.setmode(GPIO.BCM)
-oldTime=datetime.datetime.now()
-pButton=23 #gpio 17 is used for push button
-global sampTime #10s is the default sample time
-sampTime=10
 
-def setup() :
-#button setup and interrupt
-    GPIO.setup(pButton,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-    GPIO.add_event_detect(pButton,GPIO.RISING,callback=pushTime,bouncetime=200)
-    pass
-def getTemp():
-    thread=threading.Timer(sampTime,getTemp)
-    thread.daemon=True
+#print heading
+print('{:<12s} {:<15s} {:<15s}'.format('Runtime','Temp Reading', 'Temp'))
+
+start = time.time() #get the starting time of the thread
+def print_temp_thread():
+    #This function prints the temp to the screen every 10 seconds
+    thread = threading.Timer(sampling_time, print_temp_thread)
+    thread.daemon = True  # Daemon threads exit when the program does
     thread.start()
-    diffTime=datetime.datetime.now() - oldTime
-    temp=round((chan.voltage-0.5)/0.01)
-    print("{0:.0f}".format(diffTime,'\t',chan.value,'\t ',Temp,'C','\t ', chan1.value)
-    pass
-def pushTime(chanNum):
-    #this function changes the value of the sample time whenever the button interrupt is triggered
-    global sampTime
-    if GPIO.event_detected(chanNum):
-        if sampTime>5:
-            sampTime=5
-        elif sampTime==5:
-            sampTime=1
-        else:
-            sampTime=10
-    return sampTime
-    pass
 
+    end = time.time() #get the end time 
+    runtime = math.trunc(end-start) #calculate the runtime 
+    
+    adc_value = chan.value #adc opcode
+    temp_voltage = chan.voltage #voltage from the adc
+    temp = (temp_voltage - 0.5)/0.01 #convert voltage into temp using equation from MCP9700 datasheet 
+    
+    print('{:<12s} {:<15d} {:<4.1f} C'.format(str(runtime)+'s', adc_value, temp))
+    pass 
 
-if __name__=="__main__":
-    print("Runtime",'\t',"Temp Reading",'\t',"Temp",'\t',"Lightreading")
-    setup()
-    getTemp()
+# sampling period button
+def sampling_btn_pressed(sampling_btn):
+#this function increases the sampling period if the button is pressed
+    global sampling_time
+    global presses
+    
+    presses+=1
+
+    if (presses==1):
+        sampling_time = 1
+    elif (presses==2):
+        sampling_time = 5
+    elif (presses==3):
+        sampling_time = 10
+        presses=0 #loop back to 0 presses once the button has been pressed 3 times
+    
+    return sampling_time
+    return presses
+
+pass
+
+if __name__ == "__main__":
+    setup() #call setup
+    print_temp_thread() # call it once to start the thread
+    
+    # Tell our program to run indefinitely
     while True:
-            pass
+        pass
