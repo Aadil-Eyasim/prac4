@@ -50,8 +50,8 @@ def pushTime(chanNum):
 
 
 if __name__=="__main__":
-print("Runtime",'\t',"Temp Reading",'\t',"Temp",'\t',"Lightreading")
-setup()
-getTemp()
-while True:
-pass
+    print("Runtime",'\t',"Temp Reading",'\t',"Temp",'\t',"Lightreading")
+    setup()
+    getTemp()
+    while True:
+            pass
