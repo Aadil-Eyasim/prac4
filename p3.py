@@ -36,7 +36,7 @@ print('{:<12s} {:<15s} {:<15s} {:<15s}'.format('Runtime','Temp Reading', 'Temp',
 start = datetime.datetime.now()
 def print_runtime_temp_thread():
 
-    thread = threading.Timer(t, print_temp_thread)
+    thread = threading.Timer(t, print_temp_runtime_thread)
     thread.daemon = True  # Daemon threads exit when the program does
     thread.start()
 
