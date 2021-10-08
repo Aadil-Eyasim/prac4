@@ -26,7 +26,7 @@ def setup() :
 #button setup and interrupt
     GPIO.setup(pButton,GPIO.IN,pull_up_down=GPIO.PUD_UP)
     GPIO.add_event_detect(pButton,GPIO.RISING,callback=pushTime,bouncetime=200)
-    
+    pass
 def getTemp():
     thread=threading.Timer(sampTime,getTemp)
     thread.daemon=True
@@ -34,7 +34,7 @@ def getTemp():
     diffTime=datetime.datetime.now() - oldTime
     temp=round((chan.voltage-0.5)/0.01)
     print("{0:.0f}".format(diffTime,'\t',chan.value,'\t ',Temp,'C','\t ', chan1.value)
-    
+    pass
 def pushTime(chanNum):
     #this function changes the value of the sample time whenever the button interrupt is triggered
     global sampTime
