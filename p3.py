@@ -15,8 +15,8 @@ cs = digitalio.DigitalInOut(board.D5)
 # create the mcp object
 mcp = MCP.MCP3008(spi, cs)
 # create an analog input channel on pin 1
-chan = AnalogIn(mcp, MCP.P1)
-chan1 = AnalogIn(mcp, MCP.P2)
+chan = AnalogIn(mcp, MCP.P2)
+chan1 = AnalogIn(mcp, MCP.P1)
 
 #print(’Raw ADC Value: ’, chan.value)
 #print(’ADC Voltage: ’ + str(chan.voltage) + ’V’)
