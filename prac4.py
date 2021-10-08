@@ -43,7 +43,7 @@ def print_runtime_temp_thread():
  
     temp = round(((chan1.voltage - 0.5)*100), 2)
     
-    print('{:<12s} {:<15d} {:<15s} C {:<15d}'.format(str(runtime)+'s', chan1.value, str(temp)+' C', chan2.value))
+    print('{:<12s} {:<15d} {:<5.2f} {:<3s} {:<15d}'.format(str(runtime)+'s', chan1.value, temp, str(C), chan2.value))
     pass 
 
 
