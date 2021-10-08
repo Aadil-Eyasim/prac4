@@ -19,7 +19,7 @@ chan = AnalogIn(mcp, MCP.P1)
 chan1= AnalogIn(mcp, MCP.P2)
 GPIO.setmode(GPIO.BCM)
 oldTime=datetime.datetime.now()
-pButton=17 #gpio 17 is used for push button
+pButton=23 #gpio 17 is used for push button
 global sampTime #10s is the default sample time
 sampTime=10
 
