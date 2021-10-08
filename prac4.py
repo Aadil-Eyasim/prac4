@@ -41,7 +41,7 @@ def print_runtime_temp_thread():
     end = time.time() #get the end time 
     runtime = math.trunc(end-start) 
  
-    temp = (chan1.voltage - 0.5)*100  
+    temp = round((chan1.voltage - 0.5)*100) 
     
     print('{:<12s} {:<15d} {:<12f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
     pass 
@@ -51,10 +51,10 @@ def toggle_btn_pressed(toggle_btn):
 
     global t
     if GPIO.event_detected(toggle_btn):
-        if t>5:
-            t=1
-        elif t==5:
-            t=1
+        if t==1:
+            t=5
+        elif t==1:
+            t=5
         else:
             t=10
         return t
