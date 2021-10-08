@@ -58,11 +58,11 @@ def toggle_btn_pressed(toggle_btn):
     global t
     if GPIO.event_detected(toggle_btn):
         if t==1:
-            t=5
-        elif t==5:
             t=10
-        elif t==10:
+        elif t==5:
             t=1
+        elif t==10:
+            t=5
         return t
 pass
 
