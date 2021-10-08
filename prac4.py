@@ -41,9 +41,9 @@ def print_runtime_temp_thread():
     end = time.time() #get the end time 
     runtime = math.trunc(end-start) 
  
-    temp = round((chan1.voltage - 0.5)*100) 
+    temp = chan1.voltage - 0.5)*100
     
-    print('{:<12s} {:<15d} {:<12f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
+    print('{:<12s} {:<15d} {:<3.3f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
     pass 
 
 
