@@ -33,7 +33,7 @@ def getTemp():
     thread.start()
     diffTime=datetime.datetime.now() - oldTime
     temp=round((chan.voltage-0.5)/0.01)
-    print("{0:.0f}".format(RT.total_seconds())+"s",'\t',chan.value,'\t ',Temp,'C','\t ', chan1.value)
+    print("{0:.0f}".format(diffTime,'\t',chan.value,'\t ',Temp,'C','\t ', chan1.value)
     
 def pushTime(chanNum):
     #this function changes the value of the sample time whenever the button interrupt is triggered
