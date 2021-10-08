@@ -40,12 +40,17 @@ def print_runtime_temp_thread():
     thread.daemon = True  # Daemon threads exit when the program does
     thread.start()
 
-    end = datetime.datetime.now() 
-    runtime = math.trunc(end-start)  
+    global start, totruntime
+    
+    end = datetime.now() 
+    runtime = end - start
+    runtime = runtime.seconds
+    start = end
+    totruntime += runtime
     
     temp = (chan1.voltage - 0.5)/0.01  
     
-    print('{:<12s} {:<15d} {:<4.1f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan.value))
+    print('{:<12s} {:<15d} {:<4.1f} C {:<15d}'.format(str(totruntime)+'s', chan1.value, temp, chan.value))
     pass 
 
 # sampling period button
