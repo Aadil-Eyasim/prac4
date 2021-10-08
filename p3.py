@@ -5,7 +5,7 @@ import adafruit_mcp3xxx.mcp3008 as MCP
 from adafruit_mcp3xxx.analog_in import AnalogIn 
 import RPi.GPIO as GPIO
 import threading
-import datetime 
+import time 
 import math
 
 #create the spi bus
@@ -33,24 +33,21 @@ def setup():
 t = 1
 print('{:<12s} {:<15s} {:<15s} {:<15s}'.format('Runtime','Temp Reading', 'Temp', 'Light Reading'))
 
-start = datetime.datetime.now()
+ 
+start = time.time()
 def print_runtime_temp_thread():
 
     thread = threading.Timer(t, print_runtime_temp_thread)
     thread.daemon = True  # Daemon threads exit when the program does
     thread.start()
 
-    global start, totruntime
     
-    end = datetime.now() 
-    runtime = end - start
-    runtime = runtime.seconds
-    start = end
-    totruntime += runtime
-    
+    end = time.time() #get the end time 
+    runtime = math.trunc(end-start) 
+ 
     temp = (chan1.voltage - 0.5)/0.01  
     
-    print('{:<12s} {:<15d} {:<4.1f} C {:<15d}'.format(str(totruntime)+'s', chan1.value, temp, chan.value))
+    print('{:<12s} {:<15d} {:<4.1f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan.value))
     pass 
 
 # sampling period button
