@@ -33,14 +33,14 @@ def setup():
 t = 1
 print('{:<12s} {:<15s} {:<15s} {:<15s}'.format('Runtime','Temp Reading', 'Temp', 'Light Reading'))
 
-start = datetime.datetime()
+start = datetime.datetime.now()
 def print_runtime_temp_thread():
 
     thread = threading.Timer(t, print_temp_thread)
     thread.daemon = True  # Daemon threads exit when the program does
     thread.start()
 
-    end = datetime.datetime() 
+    end = datetime.datetime.now() 
     runtime = math.trunc(end-start)  
     
     temp = (chan1.voltage - 0.5)/0.01  
