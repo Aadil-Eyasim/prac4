@@ -46,7 +46,7 @@ def pushTime(chanNum):
         else:
             sampTime=10
     return sampTime
-
+    pass
 
 
 if __name__=="__main__":
