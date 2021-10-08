@@ -43,7 +43,7 @@ def print_runtime_temp_thread():
  
     temp = (chan1.voltage - 0.5)*100
     
-    print('{:<12s} {:<15d} {:<3.3f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
+    print('{:<12s} {:<15d} {:<12.2f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
     pass 
 
 
@@ -55,6 +55,8 @@ def toggle_btn_pressed(toggle_btn):
             t=5
         elif t==1:
             t=5
+        elif t==10:
+            t=1
         else:
             t=10
         return t
