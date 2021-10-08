@@ -29,7 +29,7 @@ def setup():
     GPIO.add_event_detect(toggle_btn, GPIO.FALLING, callback=toggle_btn_pressed, bouncetime=300) 
     pass
     
-print('{:<12s} {:<15s} {:<12s} {:<15s}'.format('Runtime','Temp Reading', 'Temp', 'Light Reading'))
+
 t = 1 
 start = time.time()
 def print_runtime_temp_thread():
@@ -43,7 +43,7 @@ def print_runtime_temp_thread():
  
     temp = (chan1.voltage - 0.5)*100  
     
-    print('{:<12s} {:<15d} {:<12s} C {:>15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
+    print('{:<12s} {:<15d} {:<12f} C {:<15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
     pass 
 
 
@@ -62,7 +62,7 @@ pass
 
 if __name__ == "__main__":
     setup() 
-
+    print('{:<12s} {:<15s} {:<12s} {:<15s}'.format('Runtime','Temp Reading', 'Temp', 'Light Reading'))
     print_runtime_temp_thread() 
     
     # Tell our program to run indefinitely
