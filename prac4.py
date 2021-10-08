@@ -51,7 +51,7 @@ def toggle_btn_pressed(toggle_btn):
 
     global t
     if GPIO.event_detected(toggle_btn):
-        if t=>5:
+        if t>5:
             t=1
         elif t==5:
             t=1
