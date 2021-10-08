@@ -15,8 +15,9 @@ cs = digitalio.DigitalInOut(board.D5)
 # create the mcp object
 mcp = MCP.MCP3008(spi, cs)
 # create an analog input channel on pin 1
-chan = AnalogIn(mcp, MCP.P2)
-chan1 = AnalogIn(mcp, MCP.P1)
+
+chan1 = AnalogIn(mcp, MCP.P1) #for Temp sensor
+chan2 = AnalogIn(mcp, MCP.P2) #for LDR
 
 #print(’Raw ADC Value: ’, chan.value)
 #print(’ADC Voltage: ’ + str(chan.voltage) + ’V’)
@@ -47,7 +48,7 @@ def print_runtime_temp_thread():
  
     temp = (chan1.voltage - 0.5)*100  
     
-    print('{:<12s} {:<15d} {:<4.1f} C {:>15d}'.format(str(runtime)+'s', chan1.value, temp, chan.value))
+    print('{:<12s} {:<15d} {:<4.1f} C {:>15d}'.format(str(runtime)+'s', chan1.value, temp, chan2.value))
     pass 
 
 # sampling period button
@@ -56,12 +57,12 @@ def toggle_btn_pressed(toggle_btn):
 #this function increases the sampling period if the button is pressed
     global t
     if GPIO.event_detected(toggle_btn):
-        if t>5:
+        if t==1:
             t=5
         elif t==5:
-            t=1
-        else:
             t=10
+        elif t==10:
+            t=1
         return t
 pass
 
